@@ -1,6 +1,12 @@
 [package]
 name = "mini-midi"
+description = "A library to abstract MIDI messages"
 version = "0.0.1"
 edition = "2021"
+authors = ["Tess Ellenoir Duursma"]
+repository = "https://github.com/VanuPhantom/mini-mid"
+license = "MIT"
+keywords = ["midi"]
+categories = ["multimedia::encoding"]
 
 [dependencies]
