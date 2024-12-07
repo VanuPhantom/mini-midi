@@ -42,26 +42,32 @@ impl From<u8> for Channel {
     }
 }
 
-impl Into<u8> for Channel {
+impl Into<u8> for &Channel {
     fn into(self) -> u8 {
-        match self {
-            Self::Channel1 => 0,
-            Self::Channel2 => 1,
-            Self::Channel3 => 2,
-            Self::Channel4 => 3,
-            Self::Channel5 => 4,
-            Self::Channel6 => 5,
-            Self::Channel7 => 6,
-            Self::Channel8 => 7,
-            Self::Channel9 => 8,
-            Self::Channel10 => 9,
-            Self::Channel11 => 10,
-            Self::Channel12 => 11,
-            Self::Channel13 => 12,
-            Self::Channel14 => 13,
-            Self::Channel15 => 14,
-            Self::Channel16 => 15,
+        match self.as_ref() {
+            Channel::Channel1 => 0,
+            Channel::Channel2 => 1,
+            Channel::Channel3 => 2,
+            Channel::Channel4 => 3,
+            Channel::Channel5 => 4,
+            Channel::Channel6 => 5,
+            Channel::Channel7 => 6,
+            Channel::Channel8 => 7,
+            Channel::Channel9 => 8,
+            Channel::Channel10 => 9,
+            Channel::Channel11 => 10,
+            Channel::Channel12 => 11,
+            Channel::Channel13 => 12,
+            Channel::Channel14 => 13,
+            Channel::Channel15 => 14,
+            Channel::Channel16 => 15,
         }
+    }
+}
+
+impl AsRef<Channel> for Channel {
+    fn as_ref(&self) -> &Channel {
+        self
     }
 }
 
