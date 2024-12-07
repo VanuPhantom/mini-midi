@@ -230,7 +230,6 @@ impl<'a> Into<Vec<u8>> for Message<'a> {
             Message::SystemReset => {
                 vec![255u8]
             }
-            _ => todo!(),
         }
     }
 }
