@@ -42,6 +42,29 @@ impl From<u8> for Channel {
     }
 }
 
+impl Into<u8> for Channel {
+    fn into(self) -> u8 {
+        match self {
+            Self::Channel1 => 0,
+            Self::Channel2 => 1,
+            Self::Channel3 => 2,
+            Self::Channel4 => 3,
+            Self::Channel5 => 4,
+            Self::Channel6 => 5,
+            Self::Channel7 => 6,
+            Self::Channel8 => 7,
+            Self::Channel9 => 8,
+            Self::Channel10 => 9,
+            Self::Channel11 => 10,
+            Self::Channel12 => 11,
+            Self::Channel13 => 12,
+            Self::Channel14 => 13,
+            Self::Channel15 => 14,
+            Self::Channel16 => 15,
+        }
+    }
+}
+
 /// A MIDI message.  
 /// Refer to [this table](https://midi.org/expanded-midi-1-0-messages-list)
 /// for more info.
