@@ -1,3 +1,5 @@
+use std::iter;
+
 /// A MIDI channel.
 #[derive(Debug)]
 pub enum Channel {
@@ -165,6 +167,70 @@ impl<'a> From<&'a [u8]> for Message<'a> {
             255 => Self::SystemReset,
             // TODO: Add error handling
             _ => panic!("Invalid MIDI message!"),
+        }
+    }
+}
+
+impl<'a> Into<Vec<u8>> for Message<'a> {
+    fn into(self) -> Vec<u8> {
+        fn c_to_u8(channel: &Channel) -> u8 {
+            Into::<u8>::into(channel)
+        }
+
+        match self {
+            Message::NoteOff(ref channel, note, velocity) => {
+                vec![128u8 + c_to_u8(channel), note, velocity]
+            }
+            Message::NoteOn(ref channel, note, velocity) => {
+                vec![144u8 + c_to_u8(channel), note, velocity]
+            }
+            Message::PolyphonicAftertouch(ref channel, note, pressure) => {
+                vec![160u8 + c_to_u8(channel), note, pressure]
+            }
+            Message::ControlOrModeChange(ref channel, byte2, byte3) => {
+                vec![176u8 + c_to_u8(channel), byte2, byte3]
+            }
+            Message::ProgramChange(ref channel, program) => {
+                vec![192u8 + c_to_u8(channel), program]
+            }
+            Message::Aftertouch(ref channel, pressure) => {
+                vec![208u8 + c_to_u8(channel), pressure]
+            }
+            Message::PitchBendChange(ref channel, lsb, msb) => {
+                vec![224u8 + c_to_u8(channel), lsb, msb]
+            }
+            Message::SystemExclusive(data) => iter::once(240u8)
+                .chain(data.to_owned())
+                .chain(iter::once(247u8))
+                .collect(),
+            Message::SongPositionPointer(lsb, msb) => {
+                vec![242u8, lsb, msb]
+            }
+            Message::SongSelect(song) => {
+                vec![243u8, song]
+            }
+            Message::TuneRequest => {
+                vec![246u8]
+            }
+            Message::TimingClock => {
+                vec![248u8]
+            }
+            Message::Start => {
+                vec![250u8]
+            }
+            Message::Continue => {
+                vec![251u8]
+            }
+            Message::Stop => {
+                vec![252u8]
+            }
+            Message::ActiveSensing => {
+                vec![254u8]
+            }
+            Message::SystemReset => {
+                vec![255u8]
+            }
+            _ => todo!(),
         }
     }
 }
